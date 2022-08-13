@@ -31,16 +31,40 @@ To get the remote bash after pod is running execute:
 ./k8s-remote-bash.sh
 ```
 
+## Using ETCD CLI
+
+Check these:
+* https://etcd.io/docs/v3.4/dev-guide/interacting_v3/
+* https://lzone.de/cheat-sheet/etcd
+
 ## Using Redis CLI
 
-### Delete  Redis Keys
+Check these:
+* https://redis.io/docs/manual/cli/
+* https://lzone.de/cheat-sheet/Redis
+* https://www.tutorialspoint.com/redis/redis_commands.htm
 
-Go to `redis-cli`:
+Go to `redis-cli` console with:
 ```bash
 redis-cli -h <REDIS IP> -p <REDIS port>
 ```
 
-In the redis-cli:
+All following commands are in the redis-cli.
+
+### List Redis Keys
+
+To list all keys:
+```bash
+KEYS *
+```
+
+To list keys starting with:
+```bash
+KEYS prefix*
+```
+
+### Delete Redis Keys
+
 ```bash
 EVAL "return redis.call('del', unpack(redis.call('keys', 'key_prefix_*')))" 0
 ```
