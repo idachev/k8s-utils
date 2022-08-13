@@ -10,7 +10,7 @@ RUN apt-get upgrade -y
 
 RUN apt-get install -y vim wget bash netcat-traditional curl ca-certificates gnupg2 lsb-release
 
-RUN apt-get install -y apt-utils htop software-properties-common
+RUN apt-get install -y apt-utils htop software-properties-common apache2-utils
 
 RUN apt-get update -y
 

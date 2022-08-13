@@ -14,9 +14,14 @@ First copy the `.env-tempalte` to `.env` and edit with your info.
 
 You can setup the image name and remote docker registry where to push.
 
-To build and push execute:
+To build execute:
 ```bash
 ./docker-build.sh
+```
+
+To push execute:
+```bash
+./docker-push.sh
 ```
 
 ## Deploy to K8S
@@ -29,6 +34,11 @@ To run a simple pod execute:
 To get the remote bash after pod is running execute:
 ```bash
 ./k8s-remote-bash.sh
+```
+
+To remove pod:
+```bash
+./k8s-remove.sh
 ```
 
 ## Using ETCD CLI
