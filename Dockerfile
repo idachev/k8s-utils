@@ -10,7 +10,7 @@ RUN apt-get install -y vim wget bash netcat-traditional curl ca-certificates gnu
 
 RUN apt-get install -y apt-utils htop software-properties-common apache2-utils unzip tzdata
 
-RUN apt-get install -y openssh-client
+RUN apt-get install -y openssh-client ncdu
 
 RUN update-ca-certificates
 
