@@ -10,7 +10,7 @@ It includes:
 
 ## Building & Push Docker Image
 
-First copy the `.env-tempalte` to `.env` and edit with your info.
+First copy the `tempalte.env` to `.env` and edit with your info.
 
 You can setup the image name and remote docker registry where to push.
 
