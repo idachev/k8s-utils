@@ -78,3 +78,22 @@ KEYS prefix*
 ```bash
 EVAL "return redis.call('del', unpack(redis.call('keys', 'key_prefix_*')))" 0
 ```
+
+## Using `simpleproxy`
+
+Let say you have a DB accessible only from the cluster.
+
+You can access it through the `simpleproxy` with this:
+```bash
+simpleproxy -d -L 15432 -R <DB IP>:5432
+```
+
+Redirect the port with kubectl:
+```bash
+kubectl port-forward <POD NAME> 15432:15432
+```
+
+Then you can connect to the DB with:
+```bash
+psql -h localhost -p 15432 -U <DB USER> -d <DB NAME>
+```

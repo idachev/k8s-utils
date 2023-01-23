@@ -2,6 +2,9 @@ FROM ubuntu:20.04
 
 WORKDIR /work
 
+# need to force apt update so here aways copy something new
+COPY version.txt /work
+
 RUN apt-get update -y
 
 RUN apt-get upgrade -y
@@ -10,7 +13,7 @@ RUN apt-get install -y vim wget bash netcat-traditional curl ca-certificates gnu
 
 RUN apt-get install -y apt-utils htop software-properties-common apache2-utils unzip tzdata
 
-RUN apt-get install -y openssh-client ncdu
+RUN apt-get install -y openssh-client ncdu simpleproxy net-tools
 
 RUN update-ca-certificates
 
