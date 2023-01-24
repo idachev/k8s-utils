@@ -85,12 +85,12 @@ Let say you have a DB accessible only from the cluster.
 
 You can access it through the `simpleproxy` with this:
 ```bash
-simpleproxy -d -L 15432 -R <DB IP>:5432
+./k8s-remote-exec.sh "simpleproxy -d -L 15432 -R <DB IP>:5432"
 ```
 
 Redirect the port with kubectl:
 ```bash
-kubectl port-forward <POD NAME> 15432:15432
+./k8s-port-fwd.sh 15432:15432
 ```
 
 Then you can connect to the DB with:
