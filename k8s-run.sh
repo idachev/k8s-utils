@@ -9,4 +9,5 @@ if [[ -z "${POD_NAME}" ]]; then
 fi
 
 kubectl run ${POD_NAME} --labels="name=${POD_NAME}" \
-  --image=${IGD_UTILS_DOCKER_REMOTE_REGISTRY}/${IGD_UTILS_DOCKER_IMG}:${IGD_UTILS_DOCKER_TAG}
+  --image=${IGD_UTILS_DOCKER_REMOTE_REGISTRY}/${IGD_UTILS_DOCKER_IMG}:${IGD_UTILS_DOCKER_TAG} \
+  --image-pull-policy=Always

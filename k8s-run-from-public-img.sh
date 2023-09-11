@@ -9,4 +9,5 @@ if [[ -z "${POD_NAME}" ]]; then
 fi
 
 kubectl run ${POD_NAME} --labels="name=${POD_NAME}" \
-  --image=idachev/k8s-utils:${IGD_UTILS_DOCKER_TAG}
+  --image=idachev/k8s-utils:${IGD_UTILS_DOCKER_TAG} \
+  --image-pull-policy=Always

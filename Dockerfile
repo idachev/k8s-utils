@@ -13,7 +13,7 @@ RUN apt-get install -y vim wget bash netcat-traditional curl ca-certificates gnu
 
 RUN apt-get install -y apt-utils htop software-properties-common apache2-utils unzip tzdata
 
-RUN apt-get install -y openssh-client ncdu simpleproxy net-tools psmisc
+RUN apt-get install -y openssh-client ncdu simpleproxy net-tools psmisc tmux
 
 RUN update-ca-certificates
 
@@ -76,6 +76,8 @@ RUN mkdir -p /tmp/dependencies && \
     rm -rf /tmp/dependencies
 
 ENV PATH=${PATH}:${JMETER_HOME}/bin
+
+# Cleanup
 
 RUN apt-get clean all -y
 
