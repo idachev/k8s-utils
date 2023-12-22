@@ -97,3 +97,20 @@ Then you can connect to the DB with:
 ```bash
 psql -h localhost -p 15432 -U <DB USER> -d <DB NAME>
 ```
+
+### Playing Elasticsearch
+
+List indexes:
+```bash
+curl -X GET "elasticsearch:9200/_cat/indices?v&pretty"
+```
+
+As json:
+```bash
+curl -X GET "elasticsearch:9200/_cat/indices?format=json" | jq '.'
+```
+
+List 5 documents in an index:
+```bash
+curl -X GET "elasticsearch:9200/<INDEX>/_search?pretty" -H 'Content-Type: application/json' -d'{"size": 5,"query":{"match_all": {}}}' | jq '.'
+```

@@ -13,7 +13,7 @@ RUN apt-get install -y vim wget bash netcat-traditional curl ca-certificates gnu
 
 RUN apt-get install -y apt-utils htop software-properties-common apache2-utils unzip tzdata
 
-RUN apt-get install -y openssh-client ncdu simpleproxy net-tools psmisc tmux
+RUN apt-get install -y openssh-client ncdu simpleproxy net-tools psmisc tmux jq
 
 RUN update-ca-certificates
 
