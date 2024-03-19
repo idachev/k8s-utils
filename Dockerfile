@@ -77,6 +77,18 @@ RUN mkdir -p /tmp/dependencies && \
 
 ENV PATH=${PATH}:${JMETER_HOME}/bin
 
+# Mongo Shell
+
+RUN wget -q -O - https://www.mongodb.org/static/pgp/server-6.0.asc | apt-key add -
+
+RUN sh -c 'echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu $(lsb_release -sc)/mongodb-org/6.0 multiverse" > /etc/apt/sources.list.d/mongodb-org-6.0.list'
+
+RUN apt-get update -y
+
+RUN apt-get install -y mongodb-mongosh mongodb-clients
+
+RUN apt upgrade -y
+
 # Cleanup
 
 RUN apt-get clean all -y
