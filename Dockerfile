@@ -5,19 +5,21 @@ WORKDIR /work
 # need to force apt update so here aways copy something new
 COPY version.txt /work
 
-RUN apt-get update -y
+COPY .aliases /root/.bash_aliases
 
-RUN apt-get upgrade -y
+RUN apt update -y
 
-RUN apt-get install -y vim wget bash netcat-traditional curl ca-certificates gnupg2 lsb-release
+RUN apt upgrade -y
 
-RUN apt-get install -y apt-utils htop software-properties-common apache2-utils unzip tzdata
+RUN apt install -y vim wget bash netcat-traditional curl ca-certificates gnupg2 lsb-release
 
-RUN apt-get install -y openssh-client ncdu simpleproxy net-tools psmisc tmux jq
+RUN apt install -y apt-utils htop software-properties-common apache2-utils unzip tzdata
+
+RUN apt install -y openssh-client ncdu simpleproxy net-tools psmisc tmux jq
 
 RUN update-ca-certificates
 
-RUN apt-get install -y openjdk-17-jdk
+RUN apt install -y openjdk-17-jdk
 
 RUN wget -q -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 
@@ -25,9 +27,9 @@ RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-
 
 RUN add-apt-repository ppa:redislabs/redis
 
-RUN apt-get update -y
+RUN apt update -y
 
-RUN apt-get install -y postgresql-client redis-tools
+RUN apt install -y postgresql-client redis-tools
 
 RUN mkdir -p /etc/apt/keyrings
 
@@ -38,9 +40,9 @@ RUN echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
   $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-RUN apt-get update -y
+RUN apt update -y
 
-RUN apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+RUN apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
 RUN systemctl disable docker.service
 RUN systemctl disable docker.socket
@@ -83,14 +85,20 @@ RUN wget -q -O - https://www.mongodb.org/static/pgp/server-6.0.asc | apt-key add
 
 RUN sh -c 'echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu $(lsb_release -sc)/mongodb-org/6.0 multiverse" > /etc/apt/sources.list.d/mongodb-org-6.0.list'
 
-RUN apt-get update -y
+RUN apt update -y
 
-RUN apt-get install -y mongodb-mongosh mongodb-clients
+RUN apt install -y mongodb-mongosh mongodb-clients
+
+RUN apt install -y python3-pip libpq-dev python3-dev
+
+RUN python3 -m pip install --upgrade pip
+
+RUN pip install psycopg2
 
 RUN apt upgrade -y
 
 # Cleanup
 
-RUN apt-get clean all -y
+RUN apt clean all -y
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
