@@ -1,0 +1,8 @@
+# IDE and editor files
+- /.idea/sonarlint
+
+# Temporary files
+- /tmp
+- *.tmp
+- *.log
+

@@ -8,4 +8,7 @@ if [[ -z "${POD_NAME}" ]]; then
   POD_NAME=${IGD_UTILS_POD_NAME}
 fi
 
-kubectl cp ${1} "${POD_NAME}:"${2}
+# Remove ./ prefix from remote path if present
+REMOTE_PATH="${2#./}"
+
+kubectl cp ${1} "${POD_NAME}:${REMOTE_PATH}"
