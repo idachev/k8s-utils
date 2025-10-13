@@ -16,12 +16,12 @@ You can setup the image name and remote docker registry where to push.
 
 To build execute:
 ```bash
-./docker-build.sh
+./docker-build.sh u24.04-k8su-1.0
 ```
 
 To push execute:
 ```bash
-./docker-push.sh
+./docker-push.sh u24.04-k8su-1.0
 ```
 
 ## Deploy to K8S
@@ -77,6 +77,66 @@ KEYS prefix*
 
 ```bash
 EVAL "return redis.call('del', unpack(redis.call('keys', 'key_prefix_*')))" 0
+```
+
+## Using HTTP Proxy
+
+You can use the pod as an HTTP proxy to make requests as if you're inside the cluster. This is useful for accessing internal services, APIs, or testing connectivity from within the cluster network.
+
+### Quick Start
+
+Run the HTTP proxy setup script:
+```bash
+./k8s-http-proxy.sh
+```
+
+This will:
+1. Start tinyproxy in the pod (if not already running)
+2. Forward port 8888 from the pod to your local machine
+3. Display instructions for using the proxy
+
+### Using the Proxy
+
+Once the proxy is running, configure your HTTP client to use it:
+
+```bash
+# Set environment variables
+export http_proxy=http://localhost:8888
+export https_proxy=http://localhost:8888
+
+# Now all HTTP/HTTPS requests will go through the pod
+curl https://internal-service.cluster.local
+wget http://private-api.namespace.svc.cluster.local/api/health
+```
+
+Or use it directly with curl:
+```bash
+curl -x http://localhost:8888 https://internal-service.cluster.local
+```
+
+### Custom Ports
+
+You can specify custom ports:
+```bash
+# Use different proxy port in pod and local port
+./k8s-http-proxy.sh 8888 9090  # pod_port local_port
+
+# Then use localhost:9090 as your proxy
+export http_proxy=http://localhost:9090
+```
+
+### Stopping the Proxy
+
+Press `Ctrl+C` to stop the port forwarding. The tinyproxy service will continue running in the pod.
+
+To stop tinyproxy in the pod:
+```bash
+./k8s-http-proxy-stop.sh
+```
+
+Or manually:
+```bash
+./k8s-remote-exec.sh "pkill tinyproxy"
 ```
 
 ## Using `simpleproxy`
