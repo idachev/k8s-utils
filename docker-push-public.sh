@@ -4,18 +4,25 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 source ${DIR}/igd-utils-lib.sh
 
-TAG=$1
+# Accept multiple tags as arguments
+TAGS=("$@")
 
-if [[ -z "${TAG}" ]]; then
-  TAG=${IGD_UTILS_DOCKER_TAG}
+if [[ ${#TAGS[@]} -eq 0 ]]; then
+  TAGS=("${IGD_UTILS_DOCKER_TAG}")
 fi
-
-LOCAL_DOCKER_IMG=${IGD_UTILS_DOCKER_IMG}:${TAG}
-
-REMOTE_DOCKER_IMG=idachev/k8s-utils:${TAG}
 
 set -e
 
-docker tag ${LOCAL_DOCKER_IMG} ${REMOTE_DOCKER_IMG}
+# Tag and push each tag
+for TAG in "${TAGS[@]}"; do
+  LOCAL_DOCKER_IMG=${IGD_UTILS_DOCKER_IMG}:${TAG}
+  REMOTE_DOCKER_IMG=idachev/k8s-utils:${TAG}
 
-docker push ${REMOTE_DOCKER_IMG}
+  echo "Tagging for public: ${REMOTE_DOCKER_IMG}"
+  docker tag ${LOCAL_DOCKER_IMG} ${REMOTE_DOCKER_IMG}
+
+  echo "Pushing: ${REMOTE_DOCKER_IMG}"
+  docker push ${REMOTE_DOCKER_IMG}
+done
+
+echo "Push completed for tags: ${TAGS[*]}"
